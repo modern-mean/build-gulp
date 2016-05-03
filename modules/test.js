@@ -1,3 +1,5 @@
+'use strict';
+
 import gulp from 'gulp';
 import concat from 'gulp-concat';
 import debug from 'gulp-debug';
