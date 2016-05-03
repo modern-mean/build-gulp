@@ -2,23 +2,15 @@
 
 import gulp from 'gulp';
 import concat from 'gulp-concat';
-import uglify from 'gulp-uglify';
-import ngAnnotate from 'gulp-ng-annotate';
 import filter from 'gulp-filter';
+import file from 'gulp-file';
+import imagemin from 'gulp-imagemin';
+import pngquant from 'imagemin-pngquant';
+import mainBowerFiles from 'main-bower-files';
+import ngConfig from 'gulp-ng-config';
+import templateCache from 'gulp-angular-templatecache';
 import debug from 'gulp-debug';
-import rename from 'gulp-rename';
-import ginject from 'gulp-inject';
-import stripDebug from 'gulp-strip-debug';
-import del from 'del';
-import babel from 'gulp-babel';
-import map from 'map-stream';
-import glob from 'glob';
-import path from 'path';
-import fs from 'fs';
-import ignore from 'gulp-ignore';
-import install from 'gulp-install';
-import { exec } from 'child_process';
-import gutil from 'gulp-util';
+
 
 function application() {
   let filterJS = filter(['**/*.js'], { restore: true }),
@@ -39,14 +31,14 @@ gulp.task(application);
 function images() {
   return gulp.src(['./client/**/*.{jpg,png,gif,ico}'])
   .pipe(imagemin({
-        progressive: true,
-        svgoPlugins: [
-          {removeViewBox: false},
-          {cleanupIDs: false}
-        ],
-        use: [pngquant()]
-      }))
-    .pipe(gulp.dest('./dist/client'));
+      progressive: true,
+      svgoPlugins: [
+        {removeViewBox: false},
+        {cleanupIDs: false}
+      ],
+      use: [pngquant()]
+    }))
+  .pipe(gulp.dest('./dist/client'));
 }
 images.displayName = 'modules:client:images';
 gulp.task(images);
@@ -71,7 +63,8 @@ function templates() {
   return gulp.src(['./client/**/*.html'])
     .pipe(templateCache({
       root: process.env.MM_MODULE_ROOT,
-      module: process.env.MM_MODULE_ANGULAR
+      module: process.env.MM_MODULE_ANGULAR + '.templates',
+      moduleSystem: 'IIFE'
     }))
     .pipe(gulp.dest('./dist/client'));
 }
@@ -86,18 +79,31 @@ function clean() {
 clean.displayName = 'modules:client:clean';
 gulp.task(clean);
 
-function test(done) {
-  process.env.NODE_ENV = 'test';
-  new KarmaServer({
-    configFile: process.cwd() + '/tests/karma.conf.js',
-    singleRun: true
-  }, done).start();
+function constants() {
+  return file(process.env.MM_MODULE_ANGULAR + '.client.config.constants.js', process.env.MM_MODULE_CLIENT_CONSTANTS, { src: true })
+    .pipe(ngConfig(process.env.MM_MODULE_ANGULAR + '.config', {
+      wrap: true,
+      createModule: false
+    }))
+    .pipe(gulp.dest('./client/config'));
 }
-test.displayName = 'modules:client:test';
-gulp.task(test);
+constants.displayName = 'modules:client:constants';
+gulp.task(constants);
 
-let build = gulp.series(clean, gulp.parallel(application, images, vendor));
+function values() {
+  return file('core.client.config.values.js', process.env.MM_MODULE_CLIENT_VALUES, { src: true })
+    .pipe(ngConfig('core.config', {
+      type: 'value',
+      wrap: true,
+      createModule: false
+    }))
+    .pipe(gulp.dest('./client/config'));
+}
+values.displayName = 'modules:client:values';
+gulp.task(values);
+
+let build = gulp.series(clean, gulp.parallel(constants, values), gulp.parallel(application, images, vendor, templates));
 build.displayName = 'modules:client:build';
 gulp.task(build);
 
-export { application, images, clean, vendor, test, build }
+export { application, images, clean, vendor, test, build, constants, values, templates }
