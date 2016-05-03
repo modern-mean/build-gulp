@@ -10,7 +10,7 @@ import mainBowerFiles from 'main-bower-files';
 import ngConfig from 'gulp-ng-config';
 import templateCache from 'gulp-angular-templatecache';
 import debug from 'gulp-debug';
-
+import del from 'del';
 
 function application() {
   let filterJS = filter(['**/*.js'], { restore: true }),
@@ -106,4 +106,4 @@ let build = gulp.series(clean, gulp.parallel(constants, values), gulp.parallel(a
 build.displayName = 'modules:client:build';
 gulp.task(build);
 
-export { application, images, clean, vendor, test, build, constants, values, templates }
+export { application, images, clean, vendor, build, constants, values, templates }

@@ -1,10 +1,13 @@
 import gulp from 'gulp';
 import concat from 'gulp-concat';
-import eslint from 'gulp-eslint';
 import debug from 'gulp-debug';
 import del from 'del';
 import { Server as KarmaServer } from 'karma';
 import istanbul from 'gulp-istanbul';
+import mocha from 'gulp-mocha';
+import coveralls from 'gulp-coveralls';
+import exit from 'gulp-exit';
+
 var isparta = require('isparta');
 
 function coverage() {
@@ -14,7 +17,6 @@ function coverage() {
     .pipe(coveralls());
 }
 coverage.displayName = 'modules:test:coverage';
-gulp.task(coverage);
 
 function clean() {
   return del([
@@ -22,26 +24,49 @@ function clean() {
   ]);
 }
 clean.displayName = 'modules:test:clean';
-gulp.task(clean);
 
-function lint() {
-  return gulp.src(['./server/**/*.js', './client/**/*.js', './tests/**/*.js', '!**/client/**/*.constants.js', '!**/client/**/*.values.js'])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
-}
-lint.displayName = 'modules:lint';
-gulp.task(lint);
+
 
 function client(done) {
-  process.env.NODE_ENV = 'test';
   new KarmaServer({
     configFile: process.cwd() + '/tests/karma.conf.js',
     singleRun: true
   }, done).start();
 }
 client.displayName = 'modules:test:client';
-gulp.task(client);
+
+function server(done) {
+  gulp.src(['./server/**/*.js'])
+  	.pipe(istanbul({
+      instrumenter: isparta.Instrumenter,
+      includeUntested: true
+    }))
+  	.pipe(istanbul.hookRequire()) // or you could use .pipe(injectModules())
+  	.on('finish', function () {
+  	  gulp.src(['./tests/server/**/*.js'])
+      //.pipe(injectModules())
+  		.pipe(mocha({
+        reporter: 'spec',
+        require: ['./tests/mocha.setup'],
+      }))
+  		.pipe(istanbul.writeReports(
+        {
+          dir: './tests/.coverage/server',
+          reporters: [ 'lcov', 'html', 'text' ]
+        }
+      ))
+      .once('error', () => {
+        process.exit(1);
+        return done();
+      })
+      .on('end', () => {
+        return done();
+      })
+      //TODO this is needed until gulp-mocha is fixed
+      .pipe(exit());
+  	});
+}
+server.displayName = 'module:test:server';
 
 
-export { coverage, clean };
+export { coverage, clean, client, server };
