@@ -21,6 +21,10 @@ var _gulpFile = require('gulp-file');
 
 var _gulpFile2 = _interopRequireDefault(_gulpFile);
 
+var _gulpRename = require('gulp-rename');
+
+var _gulpRename2 = _interopRequireDefault(_gulpRename);
+
 var _gulpImagemin = require('gulp-imagemin');
 
 var _gulpImagemin2 = _interopRequireDefault(_gulpImagemin);
@@ -52,7 +56,7 @@ var _del2 = _interopRequireDefault(_del);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function bootloader() {
-  return _gulp2.default.src(['./client/**/core.client.app.loader.js']).pipe(rename('bootloader.js')).pipe(_gulp2.default.dest('./dist/client'));
+  return _gulp2.default.src(['./client/**/core.client.app.loader.js']).pipe((0, _gulpRename2.default)('bootloader.js')).pipe(_gulp2.default.dest('./dist/client'));
 }
 bootloader.displayName = 'bootloader';
 _gulp2.default.task(bootloader);
@@ -60,7 +64,7 @@ _gulp2.default.task(bootloader);
 function angular() {
   let bowerFiles = (0, _mainBowerFiles2.default)();
   let angularJS = (0, _gulpFilter2.default)(['**/angular.js'], { restore: false });
-  return _gulp2.default.src(bowerFiles).pipe(angularJS).pipe(rename('angular.js')).pipe(_gulp2.default.dest('./dist/client'));
+  return _gulp2.default.src(bowerFiles).pipe(angularJS).pipe((0, _gulpRename2.default)('angular.js')).pipe(_gulp2.default.dest('./dist/client'));
 }
 angular.displayName = 'angular';
 _gulp2.default.task(angular);

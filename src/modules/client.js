@@ -4,6 +4,7 @@ import gulp from 'gulp';
 import concat from 'gulp-concat';
 import filter from 'gulp-filter';
 import file from 'gulp-file';
+import rename from 'gulp-rename';
 import imagemin from 'gulp-imagemin';
 import pngquant from 'imagemin-pngquant';
 import mainBowerFiles from 'main-bower-files';
