@@ -26,6 +26,7 @@ function angular() {
   let angularJS = filter(['**/angular.js'], { restore: false });
   return gulp.src(bowerFiles)
     .pipe(angularJS)
+    .pipe(debug())
     .pipe(rename('angular.js'))
     .pipe(gulp.dest('./dist/client'));
 }
