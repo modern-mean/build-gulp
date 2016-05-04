@@ -38,7 +38,7 @@ function client(done) {
 client.displayName = 'modules:test:client';
 
 function server(done) {
-  gulp.src(['./server/**/*.js'])
+  gulp.src(['./src/server/**/*.js'])
   	.pipe(istanbul({
       instrumenter: isparta.Instrumenter,
       includeUntested: true

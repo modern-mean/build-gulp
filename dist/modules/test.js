@@ -62,7 +62,7 @@ function client(done) {
 client.displayName = 'modules:test:client';
 
 function server(done) {
-  _gulp2.default.src(['./server/**/*.js']).pipe((0, _gulpIstanbul2.default)({
+  _gulp2.default.src(['./src/server/**/*.js']).pipe((0, _gulpIstanbul2.default)({
     instrumenter: isparta.Instrumenter,
     includeUntested: true
   })).pipe(_gulpIstanbul2.default.hookRequire()) // or you could use .pipe(injectModules())
