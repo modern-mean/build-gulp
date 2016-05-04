@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.templates = exports.values = exports.constants = exports.build = exports.vendor = exports.clean = exports.images = exports.application = undefined;
+exports.angular = exports.bootloader = exports.templates = exports.values = exports.constants = exports.build = exports.vendor = exports.clean = exports.images = exports.application = undefined;
 
 var _gulp = require('gulp');
 
@@ -50,6 +50,20 @@ var _del = require('del');
 var _del2 = _interopRequireDefault(_del);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function bootloader() {
+  return _gulp2.default.src(['./client/**/core.client.app.loader.js']).pipe(rename('bootloader.js')).pipe(_gulp2.default.dest('./dist/client'));
+}
+bootloader.displayName = 'bootloader';
+_gulp2.default.task(bootloader);
+
+function angular() {
+  let bowerFiles = (0, _mainBowerFiles2.default)();
+  let angularJS = (0, _gulpFilter2.default)(['**/angular.js'], { restore: false });
+  return _gulp2.default.src(bowerFiles).pipe(angularJS).pipe(rename('angular.js')).pipe(_gulp2.default.dest('./dist/client'));
+}
+angular.displayName = 'angular';
+_gulp2.default.task(angular);
 
 function application() {
   let filterJS = (0, _gulpFilter2.default)(['**/*.js'], { restore: true }),
@@ -126,3 +140,5 @@ exports.build = build;
 exports.constants = constants;
 exports.values = values;
 exports.templates = templates;
+exports.bootloader = bootloader;
+exports.angular = angular;

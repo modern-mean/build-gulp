@@ -12,6 +12,25 @@ import templateCache from 'gulp-angular-templatecache';
 import debug from 'gulp-debug';
 import del from 'del';
 
+function bootloader() {
+  return gulp.src(['./client/**/core.client.app.loader.js'])
+          .pipe(rename('bootloader.js'))
+          .pipe(gulp.dest('./dist/client'));
+}
+bootloader.displayName = 'bootloader';
+gulp.task(bootloader);
+
+function angular() {
+  let bowerFiles = mainBowerFiles();
+  let angularJS = filter(['**/angular.js'], { restore: false });
+  return gulp.src(bowerFiles)
+    .pipe(angularJS)
+    .pipe(rename('angular.js'))
+    .pipe(gulp.dest('./dist/client'));
+}
+angular.displayName = 'angular';
+gulp.task(angular);
+
 function application() {
   let filterJS = filter(['**/*.js'], { restore: true }),
     filterCSS = filter(['**/*.css'], { restore: true });
@@ -106,4 +125,4 @@ let build = gulp.series(clean, gulp.parallel(constants, values), gulp.parallel(a
 build.displayName = 'modules:client:build';
 gulp.task(build);
 
-export { application, images, clean, vendor, build, constants, values, templates }
+export { application, images, clean, vendor, build, constants, values, templates, bootloader, angular }
