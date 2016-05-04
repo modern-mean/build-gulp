@@ -56,7 +56,7 @@ var _del2 = _interopRequireDefault(_del);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function bootloader() {
-  return _gulp2.default.src(['./client/**/core.client.app.loader.js']).pipe((0, _gulpRename2.default)('bootloader.js')).pipe(_gulp2.default.dest('./dist/client'));
+  return _gulp2.default.src(['./src/client/**/core.client.app.loader.js']).pipe((0, _gulpRename2.default)('bootloader.js')).pipe(_gulp2.default.dest('./dist/client'));
 }
 bootloader.displayName = 'bootloader';
 _gulp2.default.task(bootloader);
@@ -73,7 +73,7 @@ function application() {
   let filterJS = (0, _gulpFilter2.default)(['**/*.js'], { restore: true }),
       filterCSS = (0, _gulpFilter2.default)(['**/*.css'], { restore: true });
 
-  return _gulp2.default.src(['./client/**/*.module.js', './client/**/*.{js,css}', '!**/core.client.app.loader.js']).pipe(filterJS).pipe((0, _gulpConcat2.default)('application.js')).pipe(_gulp2.default.dest('./dist/client')).pipe(filterJS.restore).pipe(filterCSS).pipe((0, _gulpConcat2.default)('application.css')).pipe(_gulp2.default.dest('./dist/client'));
+  return _gulp2.default.src(['./src/client/**/*.module.js', './src/client/**/*.{js,css}', '!**/src/core.client.app.loader.js']).pipe(filterJS).pipe((0, _gulpConcat2.default)('application.js')).pipe(_gulp2.default.dest('./dist/client')).pipe(filterJS.restore).pipe(filterCSS).pipe((0, _gulpConcat2.default)('application.css')).pipe(_gulp2.default.dest('./dist/client'));
 }
 application.displayName = 'modules:client:application';
 _gulp2.default.task(application);
@@ -98,7 +98,7 @@ vendor.displayName = 'modules:client:vendor';
 _gulp2.default.task(vendor);
 
 function templates() {
-  return _gulp2.default.src(['./client/**/*.html']).pipe((0, _gulpAngularTemplatecache2.default)({
+  return _gulp2.default.src(['./src/client/**/*.html']).pipe((0, _gulpAngularTemplatecache2.default)({
     root: process.env.MM_MODULE_ROOT,
     module: process.env.MM_MODULE_ANGULAR + '.templates',
     moduleSystem: 'IIFE'
@@ -117,7 +117,7 @@ function constants() {
   return (0, _gulpFile2.default)(process.env.MM_MODULE_ANGULAR + '.client.config.constants.js', process.env.MM_MODULE_CLIENT_CONSTANTS, { src: true }).pipe((0, _gulpNgConfig2.default)(process.env.MM_MODULE_ANGULAR + '.config', {
     wrap: true,
     createModule: false
-  })).pipe(_gulp2.default.dest('./client/config'));
+  })).pipe(_gulp2.default.dest('./src/client/config'));
 }
 constants.displayName = 'modules:client:constants';
 _gulp2.default.task(constants);
@@ -127,7 +127,7 @@ function values() {
     type: 'value',
     wrap: true,
     createModule: false
-  })).pipe(_gulp2.default.dest('./client/config'));
+  })).pipe(_gulp2.default.dest('./src/client/config'));
 }
 values.displayName = 'modules:client:values';
 _gulp2.default.task(values);

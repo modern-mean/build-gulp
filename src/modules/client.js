@@ -14,7 +14,7 @@ import debug from 'gulp-debug';
 import del from 'del';
 
 function bootloader() {
-  return gulp.src(['./client/**/core.client.app.loader.js'])
+  return gulp.src(['./src/client/**/core.client.app.loader.js'])
           .pipe(rename('bootloader.js'))
           .pipe(gulp.dest('./dist/client'));
 }
@@ -37,7 +37,7 @@ function application() {
   let filterJS = filter(['**/*.js'], { restore: true }),
     filterCSS = filter(['**/*.css'], { restore: true });
 
-  return gulp.src(['./client/**/*.module.js', './client/**/*.{js,css}', '!**/core.client.app.loader.js'])
+  return gulp.src(['./src/client/**/*.module.js', './src/client/**/*.{js,css}', '!**/src/core.client.app.loader.js'])
     .pipe(filterJS)
     .pipe(concat('application.js'))
     .pipe(gulp.dest('./dist/client'))
@@ -81,7 +81,7 @@ vendor.displayName = 'modules:client:vendor';
 gulp.task(vendor);
 
 function templates() {
-  return gulp.src(['./client/**/*.html'])
+  return gulp.src(['./src/client/**/*.html'])
     .pipe(templateCache({
       root: process.env.MM_MODULE_ROOT,
       module: process.env.MM_MODULE_ANGULAR + '.templates',
@@ -106,7 +106,7 @@ function constants() {
       wrap: true,
       createModule: false
     }))
-    .pipe(gulp.dest('./client/config'));
+    .pipe(gulp.dest('./src/client/config'));
 }
 constants.displayName = 'modules:client:constants';
 gulp.task(constants);
@@ -118,7 +118,7 @@ function values() {
       wrap: true,
       createModule: false
     }))
-    .pipe(gulp.dest('./client/config'));
+    .pipe(gulp.dest('./src/client/config'));
 }
 values.displayName = 'modules:client:values';
 gulp.task(values);

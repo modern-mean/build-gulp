@@ -3,31 +3,22 @@
 import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 
-function lint() {
-  return gulp.src(['./server/**/*.js', './client/**/*.js', './tests/**/*.js', '!**/client/**/*.constants.js', '!**/client/**/*.values.js'])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
-}
-lint.displayName = 'modules:lint';
-
-
 function client() {
-  return gulp.src(['./client/**/*.js', '!**/client/**/*.constants.js', '!**/client/**/*.values.js'])
+  return gulp.src(['./src/client/**/*.js', '!**/client/**/*.constants.js', '!**/client/**/*.values.js'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 }
-lint.displayName = 'modules:lint:client';
+client.displayName = 'modules:lint:client';
 
 
 function server() {
-  return gulp.src(['./server/**/*.js'])
+  return gulp.src(['./src/server/**/*.js'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 }
-lint.displayName = 'modules:lint:server';
+server.displayName = 'modules:lint:server';
 
 function tests() {
   return gulp.src(['./tests/**/*.js'])
@@ -35,7 +26,7 @@ function tests() {
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 }
-lint.displayName = 'modules:lint:tests';
+tests.displayName = 'modules:lint:tests';
 
 let all = gulp.parallel(client, server, tests);
 

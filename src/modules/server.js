@@ -11,7 +11,8 @@ import del from 'del';
 
 function application() {
   let filterJS = filter(['**/*.js'], { restore: true });
-  return gulp.src(['./server/**/*.{js,html,pem}'])
+  return gulp.src(['./src/server/**/*.{js,html,pem}'])
+    .pipe(debug())
     .pipe(filterJS)
     .pipe(babel())
     .pipe(filterJS.restore)
