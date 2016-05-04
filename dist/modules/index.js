@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.exit = exports.clean = exports.lint = exports.test = exports.server = exports.client = undefined;
+exports.clean = exports.lint = exports.test = exports.server = exports.client = undefined;
 
 var _gulp = require('gulp');
 
@@ -38,4 +38,3 @@ exports.server = server;
 exports.test = test;
 exports.lint = lint;
 exports.clean = clean;
-exports.exit = exit;

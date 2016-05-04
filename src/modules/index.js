@@ -10,4 +10,4 @@ let clean = gulp.parallel(client.clean, server.clean, test.clean);
 clean.displayName = 'modules:clean';
 gulp.task(clean);
 
-export { client, server, test, lint, clean, exit };
+export { client, server, test, lint, clean };
