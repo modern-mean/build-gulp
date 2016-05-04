@@ -73,7 +73,7 @@ function application() {
   let filterJS = (0, _gulpFilter2.default)(['**/*.js'], { restore: true }),
       filterCSS = (0, _gulpFilter2.default)(['**/*.css'], { restore: true });
 
-  return _gulp2.default.src(['./src/client/**/*.module.js', './src/client/**/*.{js,css}', '!**/src/core.client.app.loader.js']).pipe(filterJS).pipe((0, _gulpConcat2.default)('application.js')).pipe(_gulp2.default.dest('./dist/client')).pipe(filterJS.restore).pipe(filterCSS).pipe((0, _gulpConcat2.default)('application.css')).pipe(_gulp2.default.dest('./dist/client'));
+  return _gulp2.default.src(['./src/client/**/*.module.js', './src/client/**/*.{js,css}', '!**/core.client.app.loader.js']).pipe(filterJS).pipe((0, _gulpConcat2.default)('application.js')).pipe(_gulp2.default.dest('./dist/client')).pipe(filterJS.restore).pipe(filterCSS).pipe((0, _gulpConcat2.default)('application.css')).pipe(_gulp2.default.dest('./dist/client'));
 }
 application.displayName = 'modules:client:application';
 _gulp2.default.task(application);
