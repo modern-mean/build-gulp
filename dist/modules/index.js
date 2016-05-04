@@ -9,10 +9,6 @@ var _gulp = require('gulp');
 
 var _gulp2 = _interopRequireDefault(_gulp);
 
-var _gulpExit = require('gulp-exit');
-
-var _gulpExit2 = _interopRequireDefault(_gulpExit);
-
 var _client = require('./client');
 
 var client = _interopRequireWildcard(_client);
@@ -42,4 +38,4 @@ exports.server = server;
 exports.test = test;
 exports.lint = lint;
 exports.clean = clean;
-exports.exit = _gulpExit2.default;
+exports.exit = exit;
