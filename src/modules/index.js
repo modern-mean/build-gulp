@@ -1,7 +1,6 @@
 'use strict';
 
 import gulp from 'gulp';
-import exit from 'gulp-exit';
 import * as client from './client';
 import * as server from './server';
 import * as test from './test';
