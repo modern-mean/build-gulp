@@ -5,9 +5,10 @@ import * as client from './client';
 import * as server from './server';
 import * as test from './test';
 import * as lint from './lint';
+import * as watch from './watch';
 
 let clean = gulp.parallel(client.clean, server.clean, test.clean);
 clean.displayName = 'modules:clean';
 gulp.task(clean);
 
-export { client, server, test, lint, clean };
+export { client, server, test, lint, clean, watch };
