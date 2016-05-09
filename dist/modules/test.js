@@ -44,7 +44,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var isparta = require('isparta');
 
 function coverage() {
-  return _gulp2.default.src('tests/.coverage/**/lcov.info').pipe((0, _gulpDebug2.default)()).pipe((0, _gulpConcat2.default)('lcov.info')).pipe((0, _gulpCoveralls2.default)());
+  return _gulp2.default.src('tests/.coverage/**/lcov.info').pipe((0, _gulpConcat2.default)('lcov.info')).pipe((0, _gulpCoveralls2.default)());
 }
 coverage.displayName = 'modules:test:coverage';
 

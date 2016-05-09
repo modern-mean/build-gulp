@@ -64,7 +64,7 @@ _gulp2.default.task(bootloader);
 function angular() {
   let bowerFiles = (0, _mainBowerFiles2.default)();
   let angularJS = (0, _gulpFilter2.default)(['**/angular.js'], { restore: false });
-  return _gulp2.default.src(bowerFiles).pipe(angularJS).pipe((0, _gulpDebug2.default)()).pipe((0, _gulpRename2.default)('angular.js')).pipe(_gulp2.default.dest('./dist/client'));
+  return _gulp2.default.src(bowerFiles).pipe(angularJS).pipe((0, _gulpRename2.default)('angular.js')).pipe(_gulp2.default.dest('./dist/client'));
 }
 angular.displayName = 'angular';
 _gulp2.default.task(angular);

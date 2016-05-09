@@ -14,7 +14,6 @@ var isparta = require('isparta');
 
 function coverage() {
   return gulp.src('tests/.coverage/**/lcov.info')
-    .pipe(debug())
     .pipe(concat('lcov.info'))
     .pipe(coveralls());
 }
