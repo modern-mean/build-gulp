@@ -21,18 +21,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function ok(done) {
-  console.log("WTF!!!!!!!!!!!!!!", clientBuild);
-  return done();
-}
+let clientWatcher, serverWatcher;
 
-function client() {
-  return _gulp2.default.watch(['./src/client/**/*', '!**/*.constants.js', '!**/*.values.js'], _gulp2.default.series(ok, clientBuild.build));
+function client(done) {
+  clientWatcher = _gulp2.default.watch(['./src/client/**/*', '!**/*.constants.js', '!**/*.values.js'], _gulp2.default.series(clientBuild.build));
+  return done();
 }
 client.displayName = 'modules:watch:client';
 
-function server() {
-  return _gulp2.default.watch(['./src/server/**/*'], _gulp2.default.series(_server.build));
+function server(done) {
+  serverWatcher = _gulp2.default.watch(['./src/server/**/*'], _gulp2.default.series(_server.build));
+  return done();
 }
 server.displayName = 'modules:watch:server';
 
@@ -40,8 +39,9 @@ function send(done) {
   if (process.send) {
     process.send({ ready: true });
     process.on('disconnect', () => {
-      //process.exit(1);
-      done();
+      clientWatcher.close();
+      serverWatcher.close();
+      return done();
     });
   }
 }
