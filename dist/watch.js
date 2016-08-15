@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.all = exports.server = exports.client = undefined;
+exports.all = exports.server = undefined;
 
 var _gulp = require('gulp');
 
@@ -21,16 +21,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-let clientWatcher, serverWatcher;
-
-function client(done) {
-  clientWatcher = _gulp2.default.watch(['./src/client/**/*', '!**/*.constants.js', '!**/*.values.js'], _gulp2.default.series(clientBuild.build));
-  return done();
-}
-client.displayName = 'modules:watch:client';
+let serverWatcher;
 
 function server(done) {
-  serverWatcher = _gulp2.default.watch(['./src/server/**/*'], _gulp2.default.series(_server.build));
+  serverWatcher = _gulp2.default.watch(['./src/**/*'], _gulp2.default.series(_server.build));
   return done();
 }
 server.displayName = 'modules:watch:server';
@@ -47,9 +41,8 @@ function send(done) {
 }
 send.displayName = 'modules:watch:ready';
 
-let all = _gulp2.default.parallel(client, server, send);
+let all = _gulp2.default.parallel(server, send);
 all.displayName = 'modules:watch:all';
 
-exports.client = client;
 exports.server = server;
 exports.all = all;

@@ -4,7 +4,6 @@ import gulp from 'gulp';
 import concat from 'gulp-concat';
 import debug from 'gulp-debug';
 import del from 'del';
-import { Server as KarmaServer } from 'karma';
 import istanbul from 'gulp-istanbul';
 import mocha from 'gulp-mocha';
 import coveralls from 'gulp-coveralls';
@@ -26,25 +25,15 @@ function clean() {
 }
 clean.displayName = 'modules:test:clean';
 
-
-
-function client(done) {
-  new KarmaServer({
-    configFile: process.cwd() + '/tests/karma.conf.js',
-    singleRun: true
-  }, done).start();
-}
-client.displayName = 'modules:test:client';
-
 function server(done) {
-  gulp.src(['./src/server/**/*.js'])
+  gulp.src(['./src/**/*.js'])
   	.pipe(istanbul({
       instrumenter: isparta.Instrumenter,
       includeUntested: true
     }))
   	.pipe(istanbul.hookRequire()) // or you could use .pipe(injectModules())
   	.on('finish', function () {
-  	  gulp.src(['./tests/server/**/*.js'])
+  	  gulp.src(['./tests/**/*.js'])
       //.pipe(injectModules())
   		.pipe(mocha({
         reporter: 'spec',
@@ -52,7 +41,7 @@ function server(done) {
       }))
   		.pipe(istanbul.writeReports(
         {
-          dir: './tests/.coverage/server',
+          dir: './tests/.coverage',
           reporters: [ 'lcov', 'html', 'text' ]
         }
       ))
@@ -70,4 +59,4 @@ function server(done) {
 server.displayName = 'module:test:server';
 
 
-export { coverage, clean, client, server };
+export { coverage, clean, server };

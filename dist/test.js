@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.server = exports.client = exports.clean = exports.coverage = undefined;
+exports.server = exports.clean = exports.coverage = undefined;
 
 var _gulp = require('gulp');
 
@@ -20,8 +20,6 @@ var _gulpDebug2 = _interopRequireDefault(_gulpDebug);
 var _del = require('del');
 
 var _del2 = _interopRequireDefault(_del);
-
-var _karma = require('karma');
 
 var _gulpIstanbul = require('gulp-istanbul');
 
@@ -53,27 +51,19 @@ function clean() {
 }
 clean.displayName = 'modules:test:clean';
 
-function client(done) {
-  new _karma.Server({
-    configFile: process.cwd() + '/tests/karma.conf.js',
-    singleRun: true
-  }, done).start();
-}
-client.displayName = 'modules:test:client';
-
 function server(done) {
-  _gulp2.default.src(['./src/server/**/*.js']).pipe((0, _gulpIstanbul2.default)({
+  _gulp2.default.src(['./src/**/*.js']).pipe((0, _gulpIstanbul2.default)({
     instrumenter: isparta.Instrumenter,
     includeUntested: true
   })).pipe(_gulpIstanbul2.default.hookRequire()) // or you could use .pipe(injectModules())
   .on('finish', function () {
-    _gulp2.default.src(['./tests/server/**/*.js'])
+    _gulp2.default.src(['./tests/**/*.js'])
     //.pipe(injectModules())
     .pipe((0, _gulpMocha2.default)({
       reporter: 'spec',
       require: ['./tests/mocha.setup']
     })).pipe(_gulpIstanbul2.default.writeReports({
-      dir: './tests/.coverage/server',
+      dir: './tests/.coverage',
       reporters: ['lcov', 'html', 'text']
     })).once('error', () => {
       process.exit(1);
@@ -89,5 +79,4 @@ server.displayName = 'module:test:server';
 
 exports.coverage = coverage;
 exports.clean = clean;
-exports.client = client;
 exports.server = server;

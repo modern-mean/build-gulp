@@ -33,19 +33,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function application() {
   let filterJS = (0, _gulpFilter2.default)(['**/*.js'], { restore: true });
-  return _gulp2.default.src(['./src/server/**/*.{js,html,pem}']).pipe(filterJS).pipe((0, _gulpBabel2.default)()).pipe(filterJS.restore).pipe(_gulp2.default.dest('./dist/server'));
+  return _gulp2.default.src(['./src/**/*.{js,html,pem}']).pipe(filterJS).pipe((0, _gulpBabel2.default)()).pipe(filterJS.restore).pipe(_gulp2.default.dest('./dist/server'));
 }
-application.displayName = 'modules:server:application';
+application.displayName = 'build:application';
 _gulp2.default.task(application);
 
-function clean() {
-  return (0, _del2.default)(['./dist/server']);
+function index() {
+  return _gulp2.default.src(['./index.src.js']).pipe((0, _gulpBabel2.default)()).pipe((0, _gulpRename2.default)('index.js')).pipe(_gulp2.default.dest('./'));
 }
-clean.displayName = 'modules:server:clean';
+index.displayName = 'build:index';
+_gulp2.default.task(index);
+
+function clean() {
+  return (0, _del2.default)(['./dist/*']);
+}
+clean.displayName = 'build:clean';
 _gulp2.default.task(clean);
 
-let build = _gulp2.default.series(_gulp2.default.parallel(application));
-build.displayName = 'modules:server:build';
+let build = _gulp2.default.series(_gulp2.default.parallel(application, index));
+build.displayName = 'build:all';
 _gulp2.default.task(build);
 
 exports.application = application;

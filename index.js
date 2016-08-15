@@ -9,23 +9,19 @@ var _gulp = require('gulp');
 
 var _gulp2 = _interopRequireDefault(_gulp);
 
-var _client = require('./client');
-
-var client = _interopRequireWildcard(_client);
-
-var _server = require('./server');
+var _server = require('./dist/server');
 
 var server = _interopRequireWildcard(_server);
 
-var _test = require('./test');
+var _test = require('./dist/test');
 
 var test = _interopRequireWildcard(_test);
 
-var _lint = require('./lint');
+var _lint = require('./dist/lint');
 
 var lint = _interopRequireWildcard(_lint);
 
-var _watch = require('./watch');
+var _watch = require('./dist/watch');
 
 var watch = _interopRequireWildcard(_watch);
 
