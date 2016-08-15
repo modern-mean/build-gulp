@@ -9,10 +9,6 @@ var _gulp = require('gulp');
 
 var _gulp2 = _interopRequireDefault(_gulp);
 
-var _gulpConcat = require('gulp-concat');
-
-var _gulpConcat2 = _interopRequireDefault(_gulpConcat);
-
 var _gulpDebug = require('gulp-debug');
 
 var _gulpDebug2 = _interopRequireDefault(_gulpDebug);
@@ -42,7 +38,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var isparta = require('isparta');
 
 function coverage() {
-  return _gulp2.default.src('tests/.coverage/**/lcov.info').pipe((0, _gulpConcat2.default)('lcov.info')).pipe((0, _gulpCoveralls2.default)());
+  return _gulp2.default.src('tests/.coverage/lcov.info').pipe((0, _gulpCoveralls2.default)());
 }
 coverage.displayName = 'modules:test:coverage';
 

@@ -1,7 +1,6 @@
 'use strict';
 
 import gulp from 'gulp';
-import concat from 'gulp-concat';
 import debug from 'gulp-debug';
 import del from 'del';
 import istanbul from 'gulp-istanbul';
@@ -12,8 +11,7 @@ import exit from 'gulp-exit';
 var isparta = require('isparta');
 
 function coverage() {
-  return gulp.src('tests/.coverage/**/lcov.info')
-    .pipe(concat('lcov.info'))
+  return gulp.src('tests/.coverage/lcov.info')
     .pipe(coveralls());
 }
 coverage.displayName = 'modules:test:coverage';
