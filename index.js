@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.watch = exports.clean = exports.lint = exports.test = exports.server = exports.client = undefined;
+exports.watch = exports.clean = exports.lint = exports.test = exports.server = undefined;
 
 var _gulp = require('gulp');
 
@@ -29,11 +29,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-let clean = _gulp2.default.parallel(client.clean, server.clean, test.clean);
+let clean = _gulp2.default.parallel(server.clean, test.clean);
 clean.displayName = 'modules:clean';
 _gulp2.default.task(clean);
 
-exports.client = client;
 exports.server = server;
 exports.test = test;
 exports.lint = lint;
