@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.release = exports.watch = exports.clean = exports.lint = exports.test = exports.build = undefined;
+exports.watch = exports.clean = exports.lint = exports.test = exports.build = undefined;
 
 var _gulp = require('gulp');
 
@@ -25,10 +25,6 @@ var _watch = require('./dist/watch');
 
 var watch = _interopRequireWildcard(_watch);
 
-var _release = require('./dist/release');
-
-var release = _interopRequireWildcard(_release);
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42,4 +38,3 @@ exports.test = test;
 exports.lint = lint;
 exports.clean = clean;
 exports.watch = watch;
-exports.release = release;
