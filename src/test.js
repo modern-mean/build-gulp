@@ -14,16 +14,17 @@ function coverage() {
   return gulp.src('tests/.coverage/lcov.info')
     .pipe(coveralls());
 }
-coverage.displayName = 'modules:test:coverage';
+coverage.displayName = 'test:coverage';
 
 function clean() {
   return del([
     './tests/.coverage/**'
   ]);
 }
-clean.displayName = 'modules:test:clean';
+clean.displayName = 'test:clean';
+gulp.task(clean);
 
-function server(done) {
+function src(done) {
   gulp.src(['./src/**/*.js'])
   	.pipe(istanbul({
       instrumenter: isparta.Instrumenter,
@@ -54,7 +55,15 @@ function server(done) {
       .pipe(exit());
   	});
 }
-server.displayName = 'module:test:server';
+src.displayName = 'test:src';
+gulp.task(src);
+
+function watch(done) {
+  serverWatcher = gulp.watch(['./src/**/*'], gulp.series(src));
+  return done();
+}
+watch.displayName = 'test:watch';
+gulp.task(watch);
 
 
-export { coverage, clean, server };
+export { coverage, clean, src, watch };

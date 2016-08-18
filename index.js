@@ -3,15 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.watch = exports.clean = exports.lint = exports.test = exports.server = undefined;
+exports.watch = exports.clean = exports.lint = exports.test = exports.build = undefined;
 
 var _gulp = require('gulp');
 
 var _gulp2 = _interopRequireDefault(_gulp);
 
-var _server = require('./dist/server');
+var _build = require('./dist/build');
 
-var server = _interopRequireWildcard(_server);
+var build = _interopRequireWildcard(_build);
 
 var _test = require('./dist/test');
 
@@ -33,7 +33,7 @@ let clean = _gulp2.default.parallel(server.clean, test.clean);
 clean.displayName = 'modules:clean';
 _gulp2.default.task(clean);
 
-exports.server = server;
+exports.build = build;
 exports.test = test;
 exports.lint = lint;
 exports.clean = clean;

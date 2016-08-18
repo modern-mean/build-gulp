@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.build = exports.clean = exports.application = undefined;
+exports.index = exports.all = exports.clean = exports.src = undefined;
 
 var _gulp = require('gulp');
 
@@ -31,12 +31,12 @@ var _del2 = _interopRequireDefault(_del);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function application() {
+function src() {
   let filterJS = (0, _gulpFilter2.default)(['**/*.js'], { restore: true });
-  return _gulp2.default.src(['./src/**/*.{js,html,pem}']).pipe(filterJS).pipe((0, _gulpBabel2.default)()).pipe(filterJS.restore).pipe(_gulp2.default.dest('./dist/server'));
+  return _gulp2.default.src(['./src/**/*.{js,html,pem}']).pipe(filterJS).pipe((0, _gulpBabel2.default)()).pipe(filterJS.restore).pipe(_gulp2.default.dest('./dist'));
 }
-application.displayName = 'build:application';
-_gulp2.default.task(application);
+src.displayName = 'build:src';
+_gulp2.default.task(src);
 
 function index() {
   return _gulp2.default.src(['./index.src.js']).pipe((0, _gulpBabel2.default)()).pipe((0, _gulpRename2.default)('index.js')).pipe(_gulp2.default.dest('./'));
@@ -50,10 +50,11 @@ function clean() {
 clean.displayName = 'build:clean';
 _gulp2.default.task(clean);
 
-let build = _gulp2.default.series(_gulp2.default.parallel(application, index));
-build.displayName = 'build:all';
-_gulp2.default.task(build);
+let all = _gulp2.default.series(_gulp2.default.parallel(src, index));
+all.displayName = 'build:all';
+_gulp2.default.task(all);
 
-exports.application = application;
+exports.src = src;
 exports.clean = clean;
-exports.build = build;
+exports.all = all;
+exports.index = index;

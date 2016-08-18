@@ -7,16 +7,16 @@ import rename from 'gulp-rename';
 import babel from 'gulp-babel';
 import del from 'del';
 
-function application() {
+function src() {
   let filterJS = filter(['**/*.js'], { restore: true });
   return gulp.src(['./src/**/*.{js,html,pem}'])
     .pipe(filterJS)
     .pipe(babel())
     .pipe(filterJS.restore)
-    .pipe(gulp.dest('./dist/server'));
+    .pipe(gulp.dest('./dist'));
 }
-application.displayName = 'build:application';
-gulp.task(application);
+src.displayName = 'build:src';
+gulp.task(src);
 
 function index() {
   return gulp.src(['./index.src.js'])
@@ -36,8 +36,8 @@ clean.displayName = 'build:clean';
 gulp.task(clean);
 
 
-let build = gulp.series(gulp.parallel(application, index));
-build.displayName = 'build:all';
-gulp.task(build);
+let all = gulp.series(gulp.parallel(src, index));
+all.displayName = 'build:all';
+gulp.task(all);
 
-export { application, clean, build };
+export { src, clean, all, index };

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.server = exports.clean = exports.coverage = undefined;
+exports.watch = exports.src = exports.clean = exports.coverage = undefined;
 
 var _gulp = require('gulp');
 
@@ -40,14 +40,15 @@ var isparta = require('isparta');
 function coverage() {
   return _gulp2.default.src('tests/.coverage/lcov.info').pipe((0, _gulpCoveralls2.default)());
 }
-coverage.displayName = 'modules:test:coverage';
+coverage.displayName = 'test:coverage';
 
 function clean() {
   return (0, _del2.default)(['./tests/.coverage/**']);
 }
-clean.displayName = 'modules:test:clean';
+clean.displayName = 'test:clean';
+_gulp2.default.task(clean);
 
-function server(done) {
+function src(done) {
   _gulp2.default.src(['./src/**/*.js']).pipe((0, _gulpIstanbul2.default)({
     instrumenter: isparta.Instrumenter,
     includeUntested: true
@@ -71,8 +72,17 @@ function server(done) {
     .pipe((0, _gulpExit2.default)());
   });
 }
-server.displayName = 'module:test:server';
+src.displayName = 'test:src';
+_gulp2.default.task(src);
+
+function watch(done) {
+  serverWatcher = _gulp2.default.watch(['./src/**/*'], _gulp2.default.series(src));
+  return done();
+}
+watch.displayName = 'test:watch';
+_gulp2.default.task(watch);
 
 exports.coverage = coverage;
 exports.clean = clean;
-exports.server = server;
+exports.src = src;
+exports.watch = watch;
