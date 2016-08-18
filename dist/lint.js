@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.all = exports.tests = exports.server = undefined;
+exports.all = exports.tests = exports.src = undefined;
 
 var _gulp = require('gulp');
 
@@ -15,18 +15,20 @@ var _gulpEslint2 = _interopRequireDefault(_gulpEslint);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function server() {
-  return _gulp2.default.src(['./src/server/**/*.js']).pipe((0, _gulpEslint2.default)()).pipe(_gulpEslint2.default.format()).pipe(_gulpEslint2.default.failAfterError());
+function src() {
+  return _gulp2.default.src(['./src/**/*.js']).pipe((0, _gulpEslint2.default)()).pipe(_gulpEslint2.default.format()).pipe(_gulpEslint2.default.failAfterError());
 }
-server.displayName = 'modules:lint:server';
+src.displayName = 'lint:src';
+_gulp2.default.task(src);
 
 function tests() {
   return _gulp2.default.src(['./tests/**/*.js']).pipe((0, _gulpEslint2.default)()).pipe(_gulpEslint2.default.format()).pipe(_gulpEslint2.default.failAfterError());
 }
-tests.displayName = 'modules:lint:tests';
+tests.displayName = 'lint:tests';
+_gulp2.default.task(tests);
 
-let all = _gulp2.default.parallel(server, tests);
+let all = _gulp2.default.parallel(src, tests);
 
-exports.server = server;
+exports.src = src;
 exports.tests = tests;
 exports.all = all;
