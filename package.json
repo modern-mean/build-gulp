@@ -1,19 +1,25 @@
 {
-  "name": "build-gulp",
+  "name": "@modern-mean/build-gulp",
   "description": "Build Package",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "private": false,
   "author": "https://github.com/modern-mean/modern-mean/graphs/contributors",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/modern-mean/modern-mean.git"
+    "url": "https://github.com/modern-mean/build-gulp.git"
   },
   "engines": {
     "node": ">=5.8",
     "npm": ">=3.7.3"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "gulp test",
+    "build": "gulp",
+    "preversion": "npm test",
+    "version": "npm run build && git add -A",
+    "postversion": "git push && git push --tags"
+  },
   "dependencies": {
     "babel-core": "~6.7.4",
     "babel-preset-node6": "^11.0.0",
@@ -38,9 +44,8 @@
     "sinon": "~1.17.4",
     "sinon-as-promised": "^4.0.0",
     "sinon-chai": "~2.8.0",
-    "supertest": "^1.2.0"
+    "supertest": "^1.2.0",
+    "yargs": "^5.0.0"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }
