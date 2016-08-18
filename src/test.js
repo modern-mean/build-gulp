@@ -12,7 +12,7 @@ var isparta = require('isparta');
 
 function coverage() {
   return gulp.src('tests/.coverage/lcov.info')
-    .pipe(coveralls());
+  .pipe(coveralls());
 }
 coverage.displayName = 'test:coverage';
 
@@ -26,34 +26,34 @@ gulp.task(clean);
 
 function src(done) {
   gulp.src(['./src/**/*.js'])
-  	.pipe(istanbul({
-      instrumenter: isparta.Instrumenter,
-      includeUntested: true
+  .pipe(istanbul({
+    instrumenter: isparta.Instrumenter,
+    includeUntested: true
+  }))
+  .pipe(istanbul.hookRequire()) // or you could use .pipe(injectModules())
+  .on('finish', function () {
+    gulp.src(['./tests/**/*.js'])
+    //.pipe(injectModules())
+    .pipe(mocha({
+      reporter: 'spec',
+      require: ['./tests/mocha.setup'],
     }))
-  	.pipe(istanbul.hookRequire()) // or you could use .pipe(injectModules())
-  	.on('finish', function () {
-  	  gulp.src(['./tests/**/*.js'])
-      //.pipe(injectModules())
-  		.pipe(mocha({
-        reporter: 'spec',
-        require: ['./tests/mocha.setup'],
-      }))
-  		.pipe(istanbul.writeReports(
-        {
-          dir: './tests/.coverage',
-          reporters: [ 'lcov', 'html', 'text' ]
-        }
-      ))
-      .once('error', () => {
-        process.exit(1);
-        return done();
-      })
-      .on('end', () => {
-        return done();
-      })
-      //TODO this is needed until gulp-mocha is fixed
-      .pipe(exit());
-  	});
+    .pipe(istanbul.writeReports(
+      {
+        dir: './tests/.coverage',
+        reporters: [ 'lcov', 'html', 'text' ]
+      }
+    ))
+    .once('error', () => {
+      process.exit(1);
+      return done();
+    })
+    .on('end', () => {
+      return done();
+    })
+    //TODO this is needed until gulp-mocha is fixed
+    .pipe(exit());
+  });
 }
 src.displayName = 'test:src';
 gulp.task(src);

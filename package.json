@@ -18,7 +18,7 @@
     "build": "gulp",
     "preversion": "npm test",
     "version": "npm run build && git add -A",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags && npm publish --access public"
   },
   "dependencies": {
     "babel-core": "~6.7.4",

@@ -6,6 +6,7 @@ import del from 'del';
 import filter from 'gulp-filter';
 import rename from 'gulp-rename';
 import * as build from './src/build';
+import * as lint from './src/lint';
 
 function clean() {
   return del([
@@ -21,8 +22,6 @@ let defaultTask = gulp.series(clean, build.all);
 defaultTask.displayName = 'default';
 gulp.task(defaultTask);
 
-function test(done) {
-  return done();
-}
+let test = gulp.series(lint.all);
 test.displayName = 'test';
 gulp.task(test);
