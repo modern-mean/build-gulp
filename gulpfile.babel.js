@@ -6,7 +6,6 @@ import del from 'del';
 import filter from 'gulp-filter';
 import rename from 'gulp-rename';
 import * as build from './src/build';
-import * as release from './src/release';
 
 function clean() {
   return del([
