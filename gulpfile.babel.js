@@ -20,3 +20,9 @@ gulp.task(clean);
 let defaultTask = gulp.series(clean, build.all);
 defaultTask.displayName = 'default';
 gulp.task(defaultTask);
+
+function test(done) {
+  return done();
+}
+test.displayName = 'test';
+gulp.task(test);
