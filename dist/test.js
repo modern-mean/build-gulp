@@ -68,17 +68,16 @@ function src(done) {
       return done();
     }).on('end', () => {
       return done();
-    })
+    });
     //TODO this is needed until gulp-mocha is fixed
-    .pipe((0, _gulpExit2.default)());
+    //.pipe(exit());
   });
 }
 src.displayName = 'test:src';
 _gulp2.default.task(src);
 
-function watch(done) {
-  serverWatcher = _gulp2.default.watch(['./src/**/*'], _gulp2.default.series(src));
-  return done();
+function watch() {
+  return _gulp2.default.watch(['./src/**/*'], _gulp2.default.series(src));
 }
 watch.displayName = 'test:watch';
 _gulp2.default.task(watch);
