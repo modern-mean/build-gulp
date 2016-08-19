@@ -76,9 +76,11 @@ function src(done) {
 src.displayName = 'test:src';
 _gulp2.default.task(src);
 
-function watch() {
+function watchFiles() {
   return _gulp2.default.watch(['./src/**/*'], _gulp2.default.series(src));
 }
+
+let watch = _gulp2.default.series(src, watchFiles);
 watch.displayName = 'test:watch';
 _gulp2.default.task(watch);
 
