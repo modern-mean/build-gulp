@@ -6,7 +6,6 @@ import del from 'del';
 import istanbul from 'gulp-istanbul';
 import mocha from 'gulp-mocha';
 import coveralls from 'gulp-coveralls';
-import exit from 'gulp-exit';
 
 var isparta = require('isparta');
 

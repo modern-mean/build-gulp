@@ -29,10 +29,6 @@ var _gulpCoveralls = require('gulp-coveralls');
 
 var _gulpCoveralls2 = _interopRequireDefault(_gulpCoveralls);
 
-var _gulpExit = require('gulp-exit');
-
-var _gulpExit2 = _interopRequireDefault(_gulpExit);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var isparta = require('isparta');
