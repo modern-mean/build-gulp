@@ -60,7 +60,7 @@ src.displayName = 'test:src';
 gulp.task(src);
 
 function watchFiles() {
-  return gulp.watch(['./src/**/*'], gulp.series(src));
+  return gulp.watch(['./src/**/*', './tests/**/*.spec.js'], gulp.series(src));
 }
 
 let watch = gulp.series(src, watchFiles);
