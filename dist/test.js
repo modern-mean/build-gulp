@@ -77,7 +77,7 @@ src.displayName = 'test:src';
 _gulp2.default.task(src);
 
 function watchFiles() {
-  return _gulp2.default.watch(['./src/**/*'], _gulp2.default.series(src));
+  return _gulp2.default.watch(['./src/**/*', './tests/**/*.spec.js'], _gulp2.default.series(src));
 }
 
 let watch = _gulp2.default.series(src, watchFiles);
