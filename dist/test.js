@@ -41,6 +41,7 @@ function coverage() {
   return _gulp2.default.src('tests/.coverage/lcov.info').pipe((0, _gulpCoveralls2.default)());
 }
 coverage.displayName = 'test:coverage';
+_gulp2.default.task(coverage);
 
 function clean() {
   return (0, _del2.default)(['./tests/.coverage/**']);
