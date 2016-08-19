@@ -33,7 +33,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function src() {
   let filterJS = (0, _gulpFilter2.default)(['**/*.js'], { restore: true });
-  return _gulp2.default.src(['./src/**/*']).pipe(filterJS).pipe((0, _gulpBabel2.default)()).pipe(filterJS.restore).pipe(_gulp2.default.dest('./dist'));
+  return _gulp2.default.src(['./src/**/*', './src/**/.*']).pipe(filterJS).pipe((0, _gulpBabel2.default)()).pipe(filterJS.restore).pipe(_gulp2.default.dest('./dist'));
 }
 src.displayName = 'build:src';
 _gulp2.default.task(src);
