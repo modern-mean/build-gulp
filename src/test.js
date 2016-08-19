@@ -59,9 +59,11 @@ function src(done) {
 src.displayName = 'test:src';
 gulp.task(src);
 
-function watch() {
+function watchFiles() {
   return gulp.watch(['./src/**/*'], gulp.series(src));
 }
+
+let watch = gulp.series(src, watchFiles);
 watch.displayName = 'test:watch';
 gulp.task(watch);
 
