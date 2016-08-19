@@ -15,6 +15,7 @@ function coverage() {
   .pipe(coveralls());
 }
 coverage.displayName = 'test:coverage';
+gulp.task(coverage);
 
 function clean() {
   return del([
