@@ -13,7 +13,7 @@ function src() {
     .pipe(filterJS)
     .pipe(babel())
     .pipe(rename(function (path) {
-      path.extname = ".js";
+      path.extname = '.js';
       return path;
     }))
     .pipe(filterJS.restore)
