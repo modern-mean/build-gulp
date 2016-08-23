@@ -1,60 +1,47 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.index = exports.all = exports.clean = exports.src = undefined;
-
-var _gulp = require('gulp');
-
-var _gulp2 = _interopRequireDefault(_gulp);
-
-var _gulpFilter = require('gulp-filter');
-
-var _gulpFilter2 = _interopRequireDefault(_gulpFilter);
-
-var _gulpDebug = require('gulp-debug');
-
-var _gulpDebug2 = _interopRequireDefault(_gulpDebug);
-
-var _gulpRename = require('gulp-rename');
-
-var _gulpRename2 = _interopRequireDefault(_gulpRename);
-
-var _gulpBabel = require('gulp-babel');
-
-var _gulpBabel2 = _interopRequireDefault(_gulpBabel);
-
-var _del = require('del');
-
-var _del2 = _interopRequireDefault(_del);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+import gulp from 'gulp';
+import filter from 'gulp-filter';
+import debug from 'gulp-debug';
+import rename from 'gulp-rename';
+import babel from 'gulp-babel';
+import del from 'del';
 
 function src() {
-  let filterJS = (0, _gulpFilter2.default)(['**/*.js'], { restore: true });
-  return _gulp2.default.src(['./src/**/*', './src/**/.*']).pipe(filterJS).pipe((0, _gulpBabel2.default)()).pipe(filterJS.restore).pipe(_gulp2.default.dest('./dist'));
+  let filterJS = filter(['**/*.es6', '!**/templates/**/*'], { restore: true });
+  return gulp.src(['./src/**/*'])
+    .pipe(filterJS)
+    .pipe(babel())
+    .pipe(rename(function (path) {
+      path.extname = ".js";
+      return path;
+    }))
+    .pipe(filterJS.restore)
+    .pipe(gulp.dest('./dist'));
 }
 src.displayName = 'build:src';
-_gulp2.default.task(src);
+gulp.task(src);
 
 function index() {
-  return _gulp2.default.src(['./index.src.js']).pipe((0, _gulpBabel2.default)()).pipe((0, _gulpRename2.default)('index.js')).pipe(_gulp2.default.dest('./'));
+  return gulp.src(['./index.es6'])
+    .pipe(babel())
+    .pipe(rename('index.js'))
+    .pipe(gulp.dest('./'));
 }
 index.displayName = 'build:index';
-_gulp2.default.task(index);
+gulp.task(index);
 
 function clean() {
-  return (0, _del2.default)(['./dist/*']);
+  return del([
+    './dist/*'
+  ]);
 }
 clean.displayName = 'build:clean';
-_gulp2.default.task(clean);
+gulp.task(clean);
 
-let all = _gulp2.default.series(_gulp2.default.parallel(src, index));
+
+let all = gulp.series(gulp.parallel(src, index));
 all.displayName = 'build:all';
-_gulp2.default.task(all);
+gulp.task(all);
 
-exports.src = src;
-exports.clean = clean;
-exports.all = all;
-exports.index = index;
+export { src, clean, all, index };

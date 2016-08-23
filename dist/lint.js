@@ -1,34 +1,26 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.all = exports.tests = exports.src = undefined;
-
-var _gulp = require('gulp');
-
-var _gulp2 = _interopRequireDefault(_gulp);
-
-var _gulpEslint = require('gulp-eslint');
-
-var _gulpEslint2 = _interopRequireDefault(_gulpEslint);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+import gulp from 'gulp';
+import eslint from 'gulp-eslint';
 
 function src() {
-  return _gulp2.default.src(['./src/**/*.js']).pipe((0, _gulpEslint2.default)()).pipe(_gulpEslint2.default.format()).pipe(_gulpEslint2.default.failAfterError());
+  return gulp.src(['./src/**/*.js'])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 }
 src.displayName = 'lint:src';
-_gulp2.default.task(src);
+gulp.task(src);
 
 function tests() {
-  return _gulp2.default.src(['./tests/**/*.js']).pipe((0, _gulpEslint2.default)()).pipe(_gulpEslint2.default.format()).pipe(_gulpEslint2.default.failAfterError());
+  return gulp.src(['./tests/**/*.js'])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 }
 tests.displayName = 'lint:tests';
-_gulp2.default.task(tests);
+gulp.task(tests);
 
-let all = _gulp2.default.parallel(src, tests);
+let all = gulp.parallel(src, tests);
 
-exports.src = src;
-exports.tests = tests;
-exports.all = all;
+export { src, tests, all };

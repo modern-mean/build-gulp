@@ -8,10 +8,14 @@ import babel from 'gulp-babel';
 import del from 'del';
 
 function src() {
-  let filterJS = filter(['**/*.js'], { restore: true });
-  return gulp.src(['./src/**/*', './src/**/.*'])
+  let filterJS = filter(['**/*.es6', '!**/templates/**/*'], { restore: true });
+  return gulp.src(['./src/**/*'])
     .pipe(filterJS)
     .pipe(babel())
+    .pipe(rename(function (path) {
+      path.extname = ".js";
+      return path;
+    }))
     .pipe(filterJS.restore)
     .pipe(gulp.dest('./dist'));
 }
@@ -19,7 +23,7 @@ src.displayName = 'build:src';
 gulp.task(src);
 
 function index() {
-  return gulp.src(['./index.src.js'])
+  return gulp.src(['./index.es6'])
     .pipe(babel())
     .pipe(rename('index.js'))
     .pipe(gulp.dest('./'));
