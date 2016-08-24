@@ -44,4 +44,12 @@ let all = gulp.series(gulp.parallel(src, index));
 all.displayName = 'build:all';
 gulp.task(all);
 
-export { src, clean, all, index };
+function watchFiles() {
+  return gulp.watch(['./src/**/*'], gulp.series(src));
+}
+
+let watch = gulp.series(src, watchFiles);
+watch.displayName = 'src:watch';
+gulp.task(watch);
+
+export { src, clean, all, index, watch };

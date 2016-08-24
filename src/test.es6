@@ -25,18 +25,21 @@ clean.displayName = 'test:clean';
 gulp.task(clean);
 
 function src(done) {
-  gulp.src(['./src/**/*.js'])
+
+  gulp.src(['./src/**/*.es6'])
   .pipe(istanbul({
     instrumenter: isparta.Instrumenter,
     includeUntested: true
   }))
   .pipe(istanbul.hookRequire()) // or you could use .pipe(injectModules())
   .on('finish', function () {
-    gulp.src(['./tests/**/*.js'])
+    //TODO Find better way to include .es6 files for testing.
+    require.extensions['.es6'] = require.extensions['.js'];
+    gulp.src(['./tests/**/*.spec.es6'])
     //.pipe(injectModules())
     .pipe(mocha({
       reporter: 'spec',
-      require: ['./tests/mocha.setup'],
+      require: ['./tests/mocha.setup.es6'],
     }))
     .pipe(istanbul.writeReports(
       {
@@ -59,7 +62,7 @@ src.displayName = 'test:src';
 gulp.task(src);
 
 function watchFiles() {
-  return gulp.watch(['./src/**/*', './tests/**/*.spec.js'], gulp.series(src));
+  return gulp.watch(['./src/**/*', './tests/**(!.coverage)/*'], gulp.series(src));
 }
 
 let watch = gulp.series(src, watchFiles);
