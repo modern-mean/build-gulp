@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "gulp test",
-    "build": "gulp",
+    "prepublish": "gulp",
     "preversion": "npm test",
     "version": "npm run build && git add -A",
     "postversion": "git push && git push --tags && npm publish --access public"
