@@ -1,7 +1,7 @@
 {
   "name": "@modern-mean/build-gulp",
   "description": "Build Package",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "private": false,
   "author": "https://github.com/modern-mean/modern-mean/graphs/contributors",
   "license": "MIT",
@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "gulp test",
-    "prepublish": "gulp",
+    "build": "gulp",
     "preversion": "npm test",
     "version": "npm run build && git add -A",
     "postversion": "git push && git push --tags && npm publish --access public"
