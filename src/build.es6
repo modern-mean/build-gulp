@@ -33,7 +33,7 @@ gulp.task(index);
 
 function clean() {
   return del([
-    './dist/*'
+    './dist'
   ]);
 }
 clean.displayName = 'build:clean';
@@ -48,7 +48,7 @@ function watchFiles() {
   return gulp.watch(['./src/**/*'], gulp.series(src));
 }
 
-let watch = gulp.series(src, watchFiles);
+let watch = gulp.series(clean, src, watchFiles);
 watch.displayName = 'src:watch';
 gulp.task(watch);
 
