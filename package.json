@@ -1,7 +1,7 @@
 {
   "name": "@modern-mean/build-gulp",
   "description": "Build Package",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "private": false,
   "author": "https://github.com/modern-mean/modern-mean/graphs/contributors",
   "license": "MIT",
