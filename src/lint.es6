@@ -4,7 +4,7 @@ import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 
 function src() {
-  return gulp.src(['./src/**/*.js'])
+  return gulp.src(['./src/**/*.es6'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
