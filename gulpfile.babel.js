@@ -5,8 +5,8 @@ import babel from 'gulp-babel';
 import del from 'del';
 import filter from 'gulp-filter';
 import rename from 'gulp-rename';
-import * as build from './src/build';
-import * as lint from './src/lint';
+import * as build from './src/build.es6';
+import * as lint from './src/lint.es6';
 
 function clean() {
   return del([
