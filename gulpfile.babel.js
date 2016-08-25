@@ -1,5 +1,3 @@
-'use strict';
-
 import gulp from 'gulp';
 import * as builder from './src/build.es6';
 import * as linter from './src/lint.es6';

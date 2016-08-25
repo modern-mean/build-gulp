@@ -1,5 +1,3 @@
-'use strict';
-
 import gulp from 'gulp';
 import debug from 'gulp-debug';
 import del from 'del';
