@@ -29,11 +29,19 @@ var _del = require('del');
 
 var _del2 = _interopRequireDefault(_del);
 
+var _gulpUtil = require('gulp-util');
+
+var _gulpUtil2 = _interopRequireDefault(_gulpUtil);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function src() {
   let filterJS = (0, _gulpFilter2.default)(['**/*.es6', '!**/templates/**/*'], { restore: true });
-  return _gulp2.default.src(['./src/**/*']).pipe(filterJS).pipe((0, _gulpBabel2.default)()).pipe((0, _gulpRename2.default)(function (path) {
+  return _gulp2.default.src(['./src/**/*']).pipe(filterJS).pipe((0, _gulpBabel2.default)()).on('error', function (e) {
+    _gulpUtil2.default.log(_gulpUtil2.default.colors.red('[Compilation Error]'));
+    _gulpUtil2.default.log(_gulpUtil2.default.colors.red(e));
+    this.emit('end');
+  }).pipe((0, _gulpRename2.default)(function (path) {
     path.extname = '.js';
     return path;
   })).pipe(filterJS.restore).pipe(_gulp2.default.dest('./dist'));

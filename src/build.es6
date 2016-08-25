@@ -4,12 +4,18 @@ import debug from 'gulp-debug';
 import rename from 'gulp-rename';
 import babel from 'gulp-babel';
 import del from 'del';
+import gutil from 'gulp-util';
 
 function src() {
   let filterJS = filter(['**/*.es6', '!**/templates/**/*'], { restore: true });
   return gulp.src(['./src/**/*'])
     .pipe(filterJS)
     .pipe(babel())
+    .on('error', function(e) {
+      gutil.log(gutil.colors.red('[Compilation Error]'));
+      gutil.log(gutil.colors.red(e));
+      this.emit('end');
+    })
     .pipe(rename(function (path) {
       path.extname = '.js';
       return path;
