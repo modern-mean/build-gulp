@@ -9,9 +9,10 @@
     "type": "git",
     "url": "https://github.com/modern-mean/build-gulp.git"
   },
+  "main": "index.js",
   "engines": {
-    "node": ">=5.8",
-    "npm": ">=3.7.3"
+    "node": ">=6.4",
+    "npm": ">=3.10.3"
   },
   "scripts": {
     "coverage": "gulp test:coverage",
