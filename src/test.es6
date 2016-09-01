@@ -47,18 +47,18 @@ function src(done) {
       }
       return done();
     })
-    .on('end', () => {
-      if (!watchFlag) {
-        process.exit(1);
-      }
-      return done();
-    })
     .pipe(istanbul.writeReports(
       {
         dir: './tests/.coverage',
         reporters: [ 'lcov', 'html', 'text' ]
       }
-    ));
+    ))
+    .on('end', () => {
+      if (!watchFlag) {
+        process.exit(1);
+      }
+      return done();
+    });
 
     //TODO this is needed until gulp-mocha is fixed
     //.pipe(exit());
