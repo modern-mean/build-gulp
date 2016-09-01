@@ -7,6 +7,8 @@ import coveralls from 'gulp-coveralls';
 
 var isparta = require('isparta');
 
+let watchFlag = false;
+
 function coverage() {
   return gulp.src('tests/.coverage/lcov.info')
   .pipe(coveralls());
@@ -39,18 +41,25 @@ function src(done) {
       reporter: 'spec',
       require: ['./tests/mocha.setup.es6'],
     }))
+    .on('error', () => {
+      if (!watchFlag) {
+        process.exit(1);
+        return done();
+      }
+    })
+    .on('end', () => {
+      if (!watchFlag) {
+        process.exit(1);
+        return done();
+      }
+    })
     .pipe(istanbul.writeReports(
       {
         dir: './tests/.coverage',
         reporters: [ 'lcov', 'html', 'text' ]
       }
-    ))
-    .on('error', () => {
-      return done();
-    })
-    .on('end', () => {
-      return done();
-    });
+    ));
+
     //TODO this is needed until gulp-mocha is fixed
     //.pipe(exit());
   });
@@ -59,6 +68,7 @@ src.displayName = 'test:src';
 gulp.task(src);
 
 function watchFiles() {
+  watchFlag = true;
   return gulp.watch(['./src/**/*', './tests/**(!.coverage)/*'], gulp.series(src));
 }
 
