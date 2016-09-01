@@ -70,9 +70,7 @@ function src(done) {
       dir: './tests/.coverage',
       reporters: ['lcov', 'html', 'text']
     })).on('end', () => {
-      if (!watchFlag) {
-        process.exit(1);
-      }
+      process.exit();
       return done();
     });
 

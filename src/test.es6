@@ -54,9 +54,7 @@ function src(done) {
       }
     ))
     .on('end', () => {
-      if (!watchFlag) {
-        process.exit(1);
-      }
+      process.exit();
       return done();
     });
 
