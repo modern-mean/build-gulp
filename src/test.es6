@@ -45,8 +45,7 @@ function src(done) {
         reporters: [ 'lcov', 'html', 'text' ]
       }
     ))
-    .once('error', () => {
-      process.exit(1);
+    .on('error', () => {
       return done();
     })
     .on('end', () => {

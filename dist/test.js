@@ -62,8 +62,7 @@ function src(done) {
     })).pipe(_gulpIstanbul2.default.writeReports({
       dir: './tests/.coverage',
       reporters: ['lcov', 'html', 'text']
-    })).once('error', () => {
-      process.exit(1);
+    })).on('error', () => {
       return done();
     }).on('end', () => {
       return done();
