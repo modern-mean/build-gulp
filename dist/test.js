@@ -66,15 +66,15 @@ function src(done) {
         process.exit(1);
       }
       return done();
-    }).on('end', () => {
+    }).pipe(_gulpIstanbul2.default.writeReports({
+      dir: './tests/.coverage',
+      reporters: ['lcov', 'html', 'text']
+    })).on('end', () => {
       if (!watchFlag) {
         process.exit(1);
       }
       return done();
-    }).pipe(_gulpIstanbul2.default.writeReports({
-      dir: './tests/.coverage',
-      reporters: ['lcov', 'html', 'text']
-    }));
+    });
 
     //TODO this is needed until gulp-mocha is fixed
     //.pipe(exit());
