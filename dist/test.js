@@ -33,8 +33,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var isparta = require('isparta');
 
-let watchFlag = false;
-
 function coverage() {
   return _gulp2.default.src('tests/.coverage/lcov.info').pipe((0, _gulpCoveralls2.default)());
 }
@@ -61,16 +59,13 @@ function src(done) {
     .pipe((0, _gulpMocha2.default)({
       reporter: 'spec',
       require: ['./tests/mocha.setup.es6']
-    })).on('error', () => {
-      if (!watchFlag) {
-        process.exit(1);
-      }
-      return done();
-    }).pipe(_gulpIstanbul2.default.writeReports({
+    })).pipe(_gulpIstanbul2.default.writeReports({
       dir: './tests/.coverage',
       reporters: ['lcov', 'html', 'text']
-    })).on('end', () => {
-      process.exit();
+    })).once('error', () => {
+      process.exit(1);
+      return done();
+    }).on('end', () => {
       return done();
     });
 
@@ -82,7 +77,6 @@ src.displayName = 'test:src';
 _gulp2.default.task(src);
 
 function watchFiles() {
-  watchFlag = true;
   return _gulp2.default.watch(['./src/**/*', './tests/**(!.coverage)/*'], _gulp2.default.series(src));
 }
 
