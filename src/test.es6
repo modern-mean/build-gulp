@@ -44,14 +44,14 @@ function src(done) {
     .on('error', () => {
       if (!watchFlag) {
         process.exit(1);
-        return done();
       }
+      return done();
     })
     .on('end', () => {
       if (!watchFlag) {
         process.exit(1);
-        return done();
       }
+      return done();
     })
     .pipe(istanbul.writeReports(
       {

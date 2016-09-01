@@ -64,13 +64,13 @@ function src(done) {
     })).on('error', () => {
       if (!watchFlag) {
         process.exit(1);
-        return done();
       }
+      return done();
     }).on('end', () => {
       if (!watchFlag) {
         process.exit(1);
-        return done();
       }
+      return done();
     }).pipe(_gulpIstanbul2.default.writeReports({
       dir: './tests/.coverage',
       reporters: ['lcov', 'html', 'text']
