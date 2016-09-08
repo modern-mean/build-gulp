@@ -44,7 +44,7 @@ function src() {
 }
 
 function watchFiles() {
-  return _gulp2.default.watch(['./src/**/*', './tests/**(!.coverage)/*'], _gulp2.default.series(newsrc));
+  return _gulp2.default.watch(['./src/**/*', './tests/**(!.coverage)/*'], _gulp2.default.series(src));
 }
 
 let watch = _gulp2.default.series(src, watchFiles);

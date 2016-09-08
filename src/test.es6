@@ -24,7 +24,7 @@ function src() {
 }
 
 function watchFiles() {
-  return gulp.watch(['./src/**/*', './tests/**(!.coverage)/*'], gulp.series(newsrc));
+  return gulp.watch(['./src/**/*', './tests/**(!.coverage)/*'], gulp.series(src));
 }
 
 let watch = gulp.series(src, watchFiles);
